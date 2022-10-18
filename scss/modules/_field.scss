@@ -1,0 +1,33 @@
+/* _-_-_- modules/FIELD -_-_-_ */
+.field {
+  // .field__item
+  width: 70vmin;
+  height: 70vmin;
+  outline: solid 1px red;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  // flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1%;
+  // flex-direction: column;
+
+
+
+  &__item {
+    // width: ((70vmin)/4);
+    // height: (70vmin/4);
+    width: 25% - 1%;
+    height: 25% - 1%;
+    border-radius: 5%;
+    background-color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 5rem;
+    transition: 0.3s;
+  }
+}
+.empty {
+}

@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+/* _-_-_- base/BASE -_-_-_ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+article > * + * {
+  margin-top: 1em;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* _-_-_- base/TYPOGRAPHY -_-_-_ */
+html {
+  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+body {
+  font-size: 1.5em;
+}
+
+/* _-_-_- base/FONTS -_-_-_ */
+/* _-_-_- layout/GRID -_-_-_ */
+footer,
+header,
+main {
+  background-color: black;
+}
+
+body {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  border-bottom: 6px solid #bdae82;
+}
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  border-bottom: 6px solid #bdae82;
+}
+
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 8rem;
+  padding-right: 8rem;
+  width: 100%;
+}
+@media (max-width: 999px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    position: relative;
+  }
+}
+
+.main__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* _-_-_- layout/HEADER -_-_-_ */
+/* _-_-_- layout/NAVIGATION -_-_-_ */
+/* _-_-_- layout/FOOTER -_-_-_ */
+/* _-_-_- modules/BUTTONS -_-_-_ */
+/* _-_-_- modules/FIELD -_-_-_ */
+.field {
+  width: 70vmin;
+  height: 70vmin;
+  outline: solid 1px red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1%;
+}
+.field__item {
+  width: 24%;
+  height: 24%;
+  border-radius: 5%;
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 5rem;
+  transition: 0.3s;
+}
+
+/*# sourceMappingURL=style.css.map */
