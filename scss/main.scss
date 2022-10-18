@@ -1,0 +1,16 @@
+// Each line imports all SCSS files of a group
+
+// Sass-related functions, mixins, variables, etc.
+@import "utils/import-utils";
+
+// Small changes that apply across all pages
+@import "base/import-base";
+
+// Sections of a page
+@import "layout/import-layout";
+
+// Smaller components
+@import "modules/import-modules";
+
+// Page-specific styles
+@import "pages/import-pages";

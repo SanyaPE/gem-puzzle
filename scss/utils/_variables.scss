@@ -1,0 +1,16 @@
+$max-width: 1280px !default;
+
+$breakpoints: (
+  "mobile": (
+    max-width: 320px,
+  ),
+  "tablet": (
+    max-width: 467px,
+  ),
+  "laptop": (
+    max-width: 999px,
+  ),
+  "desktop": (
+    max-width: 1279px,
+  ),
+) !default;

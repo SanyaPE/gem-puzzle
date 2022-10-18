@@ -1,0 +1,58 @@
+@mixin font($size, $height: $size, $weight: 400, $style: normal) {
+    font-size: $size;
+    font-style: $style;
+    font-weight: $weight;
+    line-height: $height;
+  }
+
+  /// Mixin to manage responsive breakpoints
+  /// @author Kitty Giraudel
+  /// @param {String} $breakpoint - Breakpoint name
+  /// @require $breakpoints
+  @mixin respond-to($breakpoint) {
+    // If the key exists in the map
+    @if map-has-key($breakpoints, $breakpoint) {
+      // Prints a media query based on the value
+      @media #{inspect(map-get($breakpoints, $breakpoint))} {
+        @content;
+      }
+    }
+
+    // If the key doesn't exist in the map
+    @else {
+      @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+          + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+  }
+
+  @mixin reset {
+    margin: 0;
+    padding: 0;
+  }
+
+  /// Stripe builder
+/// @author Kitty Giraudel
+/// @param {Direction} $direction - Gradient direction
+/// @param {List} $colors - List of colors
+/// @output `background-image` if several colors, `background-color` if only one
+  @mixin stripes($direction, $colors) {
+    $length: length($colors);
+
+    @if $length > 1 {
+      $stripes: ();
+
+      @for $i from 1 through $length {
+        $stripe: (100% / $length) * ($i - 1);
+// 
+        @if $i > 1 {
+          $stripes: append($stripes, nth($colors, $i - 1) $stripe, comma);
+        }
+
+        $stripes: append($stripes, nth($colors, $i) $stripe, comma);
+      }
+
+      background-image: linear-gradient($direction, $stripes);
+    } @else if $length == 1 {
+      background-color: $colors;
+    }
+  }

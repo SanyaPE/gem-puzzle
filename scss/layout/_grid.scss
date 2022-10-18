@@ -1,0 +1,27 @@
+/* _-_-_- layout/GRID -_-_-_ */
+.body {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.container {
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: rem(220);
+  padding-right: rem(220);
+  width: 100%;
+  @include respond-to("desktop-xxl") {
+    padding-left: rem(30);
+    padding-right: rem(30);
+  }
+  @include respond-to("laptop"){
+    padding-left: rem(20);
+    padding-right: rem(20);
+    position: relative;
+  }
+  @include respond-to("mobile-l"){
+    padding-left: rem(10);
+    padding-right: rem(10);
+  }
+}
