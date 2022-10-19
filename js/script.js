@@ -6,32 +6,37 @@ const gamePuzzle = {
     fieldSize: 4,
     classes: ["container", "main", "field", "field__item", "empty"],
   },
+  // 1
+  init() {
+    console.log("start init");
+    this._createFieldTarget();
+  },
   // 2
-  _createFildTarget() {
+  _createFieldTarget() {
     let fieldSize = this.properties.fieldSize;
     for (let i = 0; i < Math.pow(fieldSize, 2); i++) {
-      console.log(i);
+    //   console.log(i);
       this.properties.fieldTarget[i] =
         i < Math.pow(fieldSize, 2) - 1 ? i + 1 : null;
     }
-    console.log(this.properties.fieldTarget);
+    // console.log(this.properties.fieldTarget);
     this._createFieldCurrent();
   },
   // 3
   _createFieldCurrent() {
     let array = [...this.properties.fieldTarget];
     let fieldCurr = [];
-    console.log(array);
+    // console.log(array);
     array = this._shuffleArray(array);
-    console.log(array);
+    // console.log(array);
     for (let i = 0; i < array.length; ) {
-      console.log(i);
+    //   console.log(i);
       fieldCurr.push(array.slice(i, i + this.properties.fieldSize));
       i += 4;
     }
-    console.log(fieldCurr);
+    // console.log(fieldCurr);
     let isSolved = this._isSolved(fieldCurr);
-    console.log(isSolved);
+    // console.log(isSolved);
     if (isSolved) this.properties.fieldCurr = fieldCurr;
     else this._createFieldCurrent();
   },
@@ -43,7 +48,6 @@ const gamePuzzle = {
     }
     return arr;
   },
-  toMove() {},
   setLocalStorage(setGame) {
     storageGame.push(setGame);
     storageGame.sort((a, b) => a.move - b.move);
@@ -59,13 +63,13 @@ const gamePuzzle = {
   //5
   _isSolved(FieldCurrent) {
     let temp = FieldCurrent;
-    console.log(temp);
+    // console.log(temp);
     let count = 0;
     for (let i = 0; i < temp.length; i++) {
       for (let j = 0; j < temp[i].length - 1; j++) {
-        console.log(temp[i][j]);
+        // console.log(temp[i][j]);
         if (temp[i][j]) {
-          console.log(temp[i][j], temp[i].slice(j + 1));
+        //   console.log(temp[i][j], temp[i].slice(j + 1));
           temp[i]
             .slice(j + 1)
             .forEach((elem) => (elem < temp[i][j] && elem ? count++ : null));
@@ -73,16 +77,28 @@ const gamePuzzle = {
         if (!temp[i][j]) count += j + 1;
       }
     }
-    console.log(count);
+    // console.log(count);
     return count % 2 ? false : true;
   },
-  // 1
-  init() {
-    console.log("start init");
-    this._createFildTarget();
-  },
+  toMove() {},
+  createElements(){
+
+
+  }
 };
 
 gamePuzzle.init();
 console.log(gamePuzzle.properties.fieldTarget);
 console.log(gamePuzzle.properties.fieldCurr);
+const tik = document.querySelector(".tik")
+tik.addEventListener("click", move)
+function move(){
+  console.log(event.target);
+  console.log(event.target.innerHTML);
+  console.log(tik.innerHTML);
+  // let a = tik.style.transform = 'translateY(105%)'
+  let a = tik.style.transform = 'translateX(-105%)'
+  console.log(a);
+}
+
+//element.style.transform: 'translateY(-n%)'

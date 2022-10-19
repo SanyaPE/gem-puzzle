@@ -1,1 +1,66 @@
 /* _-_-_- modules/BUTTONS -_-_-_ */
+.controls {
+    width: 70vmin;
+    display: flex;
+    justify-content:space-between;
+    gap: rem(20);
+    padding-bottom: rem(30);
+
+
+    // .controls__new
+
+    &__new {
+    }
+
+    // .controls__save
+
+    &__save {
+    }
+
+    // .controls__result
+
+    &__result {
+    }
+}
+.score {
+    width: 70vmin;
+    display: flex;
+    justify-content:space-between;
+    gap: rem(20);
+    font-size: rem(30);
+    padding-bottom: rem(40);
+
+    // .score__time
+
+    &__time {
+    }
+
+    // .score__moves
+
+    &__moves {
+        & span:nth-child(2){
+            display: inline-block;
+            width: rem(60);
+            text-align: end;
+        }
+    }
+}
+
+button{
+    width: rem(200);
+    height: 50px;
+    color: white;
+    border-radius: 10px;
+    border: solid white 3px;
+    cursor: pointer;
+    font-size: rem(16);
+    background-color: #bdae82;
+}
+select{
+    width: rem(200);
+    font-size: rem(16);
+    color: white;
+    border-radius: 10px;
+    border: solid white 3px;
+    background-color: #bdae82;
+}
