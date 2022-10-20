@@ -1,12 +1,22 @@
+import { elements } from "./elements.js";
 const gamePuzzle = {
-  elements: {},
+  elements: {
+    header: null,
+    main: null,
+    footer: null,
+    controls: null,
+    time: null,
+    moves: null,
+    field: null,
+  },
   properties: {
     fieldTarget: [],
     fieldCurr: null,
     fieldSize: 4,
     null: null,
     available: [],
-    classes: ["container", "main", "field", "field__item", "empty"],
+    timer: null,
+    moves: 0,
   },
 
   //Запуск кода
@@ -14,6 +24,7 @@ const gamePuzzle = {
   init() {
     console.log("start init");
     this._createFieldTarget();
+    this.createElements();
   },
 
   //Создаем базовый массив согласно fieldSize
@@ -121,25 +132,158 @@ const gamePuzzle = {
   },
 
   _searchElement(element) {
-    for (i in this.properties.fieldCurr) {
-      for (j in this.properties.fieldCurr[i]) {
+    for (let i in this.properties.fieldCurr) {
+      for (let j in this.properties.fieldCurr[i]) {
         if (this.properties.fieldCurr[i][j] == element) element = [+i, +j];
       }
     }
     return element;
   },
+  time() {
+    let scoreTime = document.querySelector(".score__time");
+    let seconds = 0;
+    let minutes = 0;
+    let timer;
+    let updateSec = () => {
+      seconds += 1;
+      if (seconds > 59) {
+        seconds = 0;
+        minutes += 1;
+      }
+      if (minutes > 59) {
+        minutes = 0;
+      }
+      scoreTime.innerHTML = `${minutes}:${seconds}`;
+    };
+  },
 
-  createElements() {},
+  createElements() {
+    let fragment = document.createDocumentFragment()
+    this._createHeader()
+    this._createMain()
+    this._createFooter()
+    fragment.appendChild(this.elements.header)
+    fragment.appendChild(this.elements.main)
+    fragment.appendChild(this.elements.footer)
+    document.body.appendChild(fragment)
+  },
+  _createHeader() {
+    //!create header
+    this.elements.header = document.createElement("header");
+    let container = document.createElement("div");
+    let title = document.createElement("h1");
+    title.innerHTML = "RSS Gem Puzzle";
+    container.classList.add("container");
+    container.appendChild(title);
+    this.elements.header.appendChild(container);
+  },
+  _createMain() {
+    //create main
+    this.elements.main = document.createElement("main");
+    //container
+    let container = document.createElement("div");
+    container.classList.add("container", "main__content");
+    //controls
+    let controls = document.createElement("div");
+    controls.classList.add("controls");
+    //!controls Size
+    let controlsSize = document.createElement("select");
+    controlsSize.classList.add("controls__size");
+    //box
+    let optionsBox = document.createDocumentFragment();
+    for (let i = 3; i <= 8; i++) {
+      let option = document.createElement("option");
+      option.innerHTML = `${i} x ${i}`;
+      option.setAttribute(`value`, `${i}`);
+      optionsBox.appendChild(option);
+    }
+
+    //box
+    let buttonsBox = document.createDocumentFragment();
+    let buttons = [
+      ["controls__new", "New Game"],
+      ["controls__save", "Save"],
+      ["controls__result", "Results"],
+    ];
+    buttons.forEach((elem) => {
+      let btn = document.createElement("button");
+      btn.classList.add(elem[0]);
+      btn.innerHTML = `${elem[1]}`;
+      buttonsBox.appendChild(btn);
+    });
+    //!score
+    let score = document.createElement("div");
+    score.classList.add("score");
+    //time
+    let scoreTime = document.createElement("div");
+    scoreTime.classList.add("score__time");
+    let timeInner = document.createElement("span");
+    timeInner.innerHTML = "Time:";
+    this.elements.time = document.createElement("span");
+    this.elements.time.setAttribute("id", "time");
+    this.elements.time.innerHTML = "00:00";
+    scoreTime.appendChild(timeInner);
+    scoreTime.appendChild(this.elements.time);
+    score.appendChild(scoreTime);
+    //moves
+    let scoreMoves = document.createElement("div");
+    scoreMoves.classList.add("score__moves");
+    let movesInner = document.createElement("span");
+    movesInner.innerHTML = "Time:";
+    this.elements.moves = document.createElement("span");
+    this.elements.moves.setAttribute("id", "moves");
+    this.elements.moves.innerHTML = "100";
+    scoreMoves.appendChild(movesInner);
+    scoreMoves.appendChild(this.elements.moves);
+    score.appendChild(scoreMoves);
+    //field
+    this.elements.field = document.createElement("div");
+    this.elements.field.classList.add("field");
+    this.elements.field.appendChild(this._createFieldItem());
+
+
+    //!собираем MAIN
+    controlsSize.appendChild(optionsBox);
+    controls.appendChild(controlsSize);
+    controls.appendChild(buttonsBox);
+    container.appendChild(controls);
+    container.appendChild(score);
+    container.appendChild(this.elements.field);
+    this.elements.main.appendChild(container)
+
+  },
+  _createFieldItem() {
+    const fragment = document.createDocumentFragment();
+    let fieldCurr = this.properties.fieldCurr.flat();
+    fieldCurr.forEach((elem) => {
+      let fieldItem = document.createElement("div");
+      fieldItem.classList.add("field__item");
+      if (!elem) fieldItem.classList.add("empty")
+      fieldItem.innerHTML = elem;
+      fragment.appendChild(fieldItem);
+    });
+    return fragment;
+  },
+  _createFooter() {
+    //!create Footer
+    this.elements.footer = document.createElement("footer");
+    let container = document.createElement("div");
+    container.classList.add("container");
+    let author = document.createElement("h2");
+    author.innerHTML = "Pepler";
+    container.appendChild(author);
+    this.elements.footer.appendChild(container);
+  },
 };
 
 gamePuzzle.init();
 // console.log(gamePuzzle.properties.fieldTarget);
-console.log(gamePuzzle.properties.fieldCurr);
-console.log(gamePuzzle.properties.null);
-console.log(gamePuzzle.properties.available);
+// console.log(gamePuzzle.properties.fieldCurr);
+// console.log(gamePuzzle.properties.null);
+// console.log(gamePuzzle.properties.available);
 // console.log(gamePuzzle.properties.available[0]);
 // let a = tik.style.transform = 'translateY(105%)'
 
 //element.style.transform: 'translateY(-n%)'
-const field = document.querySelector(".field");
-field.addEventListener("click", gamePuzzle.toMove);
+// const field = document.querySelector(".field");
+// field.addEventListener("click", gamePuzzle.toMove);

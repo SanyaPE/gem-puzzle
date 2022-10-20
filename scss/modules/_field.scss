@@ -3,7 +3,7 @@
   // .field__item
   width: 70vmin;
   height: 70vmin;
-  outline: solid 1px red;
+  border: solid 1px white;
   display: flex;
   justify-content: space-between;
   align-items:center;
@@ -11,7 +11,7 @@
   flex-wrap: wrap;
   gap: 1%;
   // flex-direction: column;
-  
+
 
 
 
@@ -31,5 +31,5 @@
   }
 }
 .empty {
-  opacity: 0.2;
+  opacity: 0;
 }
