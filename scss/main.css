@@ -1,67 +1,172 @@
-/*
-Error: File to import not found or unreadable: button.
-       Load path: D:/front-end/!! S1_2022Q3/!!project/gem-puzzle/scss
-        on line 1 of D:/front-end/!! S1_2022Q3/!!project/gem-puzzle/scss/modules/_import-modules.scss
-        from line 13 of D:\front-end\!! S1_2022Q3\!!project\gem-puzzle\scss\main.scss
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+/* _-_-_- base/BASE -_-_-_ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; }
 
-1: // Each line imports all SCSS files of a group
-2: 
-3: // Sass-related functions, mixins, variables, etc.
-4: @import "utils/import-utils";
-5: 
-6: // Small changes that apply across all pages
+ul[class],
+ol[class] {
+  padding: 0; }
 
-Backtrace:
-D:/front-end/!! S1_2022Q3/!!project/gem-puzzle/scss/modules/_import-modules.scss:1
-D:\front-end\!! S1_2022Q3\!!project\gem-puzzle\scss\main.scss:13
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:67:in `rescue in import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:45:in `import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:28:in `imported_file'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/import_node.rb:37:in `css_import?'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:314:in `visit_import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `block in with_base'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:135:in `with_frame'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `with_base'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:329:in `block (2 levels) in visit_import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:329:in `map'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:329:in `block in visit_import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:88:in `block in with_import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:135:in `with_frame'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:88:in `with_import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:326:in `visit_import'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `block in with_base'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:135:in `with_frame'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/stack.rb:79:in `with_base'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:162:in `visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `map'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:161:in `visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/visitors/perform.rb:10:in `visit'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:36:in `css_tree'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/engine.rb:389:in `_render_with_sourcemap'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/engine.rb:307:in `render_with_sourcemap'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:391:in `run'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/sass_scss.rb:63:in `process_result'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:52:in `parse'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/lib/sass/exec/base.rb:19:in `parse!'
-C:/Program Files (x86)/Koala/rubygems/gems/sass-3.5.2/bin/sass:13:in `<top (required)>'
-C:/Program Files (x86)/Koala/bin/sass:22:in `load'
-C:/Program Files (x86)/Koala/bin/sass:22:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: File to import not found or unreadable: button.\A        Load path: D:/front-end/!! S1_2022Q3/!!project/gem-puzzle/scss\A         on line 1 of D:/front-end/!! S1_2022Q3/!!project/gem-puzzle/scss/modules/_import-modules.scss\A         from line 13 of D:\front-end\!! S1_2022Q3\!!project\gem-puzzle\scss\main.scss\A \A 1: // Each line imports all SCSS files of a group\A 2: \A 3: // Sass-related functions, mixins, variables, etc.\A 4: @import \"utils/import-utils\";\A 5: \A 6: // Small changes that apply across all pages"; }
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0; }
+
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5; }
+
+ul[class],
+ol[class] {
+  list-style: none; }
+
+a:not([class]) {
+  text-decoration-skip-ink: auto; }
+
+img {
+  max-width: 100%;
+  display: block; }
+
+article > * + * {
+  margin-top: 1em; }
+
+input,
+button,
+textarea,
+select {
+  font: inherit; }
+
+/* _-_-_- base/TYPOGRAPHY -_-_-_ */
+html {
+  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+  color: white; }
+
+body {
+  font-size: 1.5em; }
+
+/* _-_-_- base/FONTS -_-_-_ */
+/* _-_-_- layout/GRID -_-_-_ */
+footer,
+header,
+main {
+  background-color: black; }
+
+body {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh; }
+
+header {
+  border-bottom: 6px solid #bdae82; }
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  border-bottom: 6px solid #bdae82; }
+
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 8rem;
+  padding-right: 8rem;
+  width: 100%; }
+  @media (max-width: 999px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      position: relative; } }
+
+.main__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+
+/* _-_-_- layout/HEADER -_-_-_ */
+/* _-_-_- layout/NAVIGATION -_-_-_ */
+/* _-_-_- layout/FOOTER -_-_-_ */
+/* _-_-_- modules/BUTTONS -_-_-_ */
+.controls {
+  width: 70vmin;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 3rem; }
+
+.score {
+  width: 70vmin;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  font-size: 3rem;
+  padding-bottom: 4rem; }
+  .score__moves span:nth-child(2) {
+    display: inline-block;
+    width: 6rem;
+    text-align: end; }
+
+button {
+  width: 20rem;
+  height: 50px;
+  color: white;
+  border-radius: 10px;
+  border: solid white 3px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  background-color: #bdae82; }
+
+select {
+  width: 20rem;
+  font-size: 1.6rem;
+  color: white;
+  border-radius: 10px;
+  border: solid white 3px;
+  background-color: #bdae82; }
+
+/* _-_-_- modules/FIELD -_-_-_ */
+.field {
+  width: 70vmin;
+  height: 70vmin;
+  outline: solid 1px red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1%; }
+  .field__item {
+    width: 24%;
+    height: 24%;
+    border-radius: 5%;
+    background-color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 5rem;
+    transition: 0.3s;
+    transform: translateX(0%);
+    transform: translateY(0%); }
+
+.empty {
+  opacity: 0.2; }
+
+/*# sourceMappingURL=main.css.map */
