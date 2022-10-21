@@ -4,14 +4,15 @@ const gamePuzzle = {
     header: null,
     main: null,
     footer: null,
-    controls: null,
+    controlsSize: null,
     time: null,
     moves: null,
     field: null,
+    // items: null,
   },
   properties: {
     fieldTarget: [],
-    fieldCurr: null,
+    fieldCurr: [],
     fieldSize: 4,
     null: null,
     available: [],
@@ -23,28 +24,43 @@ const gamePuzzle = {
   //создаем рабочий 2мерный массив _createFieldTarget и настройки Null
   init() {
     console.log("start init");
-    this._createFieldTarget();
+    this.createFieldTarget();
+    this.createFieldCurrent();
     this.createElements();
+    this.fillFieldItem();
+  },
+  choiceSize() {
+    console.log("choiceSize");
+    this.properties.fieldSize = this.elements.controlsSize.value;
+    this.elements.field.innerHTML = "";
+    console.log("size", this.properties.fieldSize);
+    console.log("target arr", this.properties.fieldTarget);
+    console.log("current arr", this.properties.fieldCurr);
+    this.createFieldTarget();
+    console.log("target arr new", this.properties.fieldTarget);
+    //!РАБОТАЕТ НЕПРАВИЛЬНО
+    console.log("current arr new", this.properties.fieldCurr);
+    // this.createFieldCurrent();
+    // this.elements.field.appendChild(this._createFieldItem());
   },
 
   //Создаем базовый массив согласно fieldSize
   //вносим в properties массив для сравнения результвта
-  _createFieldTarget() {
+  createFieldTarget() {
     let fieldSize = this.properties.fieldSize;
+    this.properties.fieldTarget = [];
     for (let i = 0; i < Math.pow(fieldSize, 2); i++) {
-      //   console.log(i);
       this.properties.fieldTarget[i] =
         i < Math.pow(fieldSize, 2) - 1 ? i + 1 : null;
     }
-    // console.log(this.properties.fieldTarget);
-    this._createFieldCurrent();
   },
 
   // Перемешиваем базовый массив (_shuffleArray)
   // создаем рабочий 2мерный массив,
   // проверка решаемости _isSolved, false - запуск заново
   // true - Null add to properties (_setNulltoProp)
-  _createFieldCurrent() {
+  //! РАБОТАЕТ НЕПРАВИЛЬНо
+  createFieldCurrent() {
     let array = [...this.properties.fieldTarget];
     let fieldCurr = [];
     // console.log(array);
@@ -55,11 +71,9 @@ const gamePuzzle = {
       fieldCurr.push(array.slice(i, i + this.properties.fieldSize));
       i += 4;
     }
-    // console.log(fieldCurr);
     let isSolved = this._isSolved(fieldCurr);
-    // console.log(isSolved);
     if (isSolved) this.properties.fieldCurr = fieldCurr;
-    else this._createFieldCurrent();
+    else this.createFieldCurrent();
     this._setNulltoProp();
   },
 
@@ -158,14 +172,14 @@ const gamePuzzle = {
   },
 
   createElements() {
-    let fragment = document.createDocumentFragment()
-    this._createHeader()
-    this._createMain()
-    this._createFooter()
-    fragment.appendChild(this.elements.header)
-    fragment.appendChild(this.elements.main)
-    fragment.appendChild(this.elements.footer)
-    document.body.appendChild(fragment)
+    let fragment = document.createDocumentFragment();
+    this._createHeader();
+    this._createMain();
+    this._createFooter();
+    fragment.appendChild(this.elements.header);
+    fragment.appendChild(this.elements.main);
+    fragment.appendChild(this.elements.footer);
+    document.body.appendChild(fragment);
   },
   _createHeader() {
     //!create header
@@ -187,14 +201,20 @@ const gamePuzzle = {
     let controls = document.createElement("div");
     controls.classList.add("controls");
     //!controls Size
-    let controlsSize = document.createElement("select");
-    controlsSize.classList.add("controls__size");
+    this.elements.controlsSize = document.createElement("select");
+    this.elements.controlsSize.classList.add("controls__size");
+    this.elements.controlsSize.addEventListener(
+      "change",
+      this.choiceSize.bind(this)
+    );
+
     //box
     let optionsBox = document.createDocumentFragment();
     for (let i = 3; i <= 8; i++) {
       let option = document.createElement("option");
       option.innerHTML = `${i} x ${i}`;
       option.setAttribute(`value`, `${i}`);
+      if (i == 4) option.setAttribute("selected", true);
       optionsBox.appendChild(option);
     }
 
@@ -239,30 +259,38 @@ const gamePuzzle = {
     //field
     this.elements.field = document.createElement("div");
     this.elements.field.classList.add("field");
+    this.elements.items = this._createFieldItem();
     this.elements.field.appendChild(this._createFieldItem());
 
-
-    //!собираем MAIN
-    controlsSize.appendChild(optionsBox);
-    controls.appendChild(controlsSize);
+    //!собираем MAIN ++
+    this.elements.controlsSize.appendChild(optionsBox);
+    controls.appendChild(this.elements.controlsSize);
     controls.appendChild(buttonsBox);
     container.appendChild(controls);
     container.appendChild(score);
     container.appendChild(this.elements.field);
-    this.elements.main.appendChild(container)
-
+    this.elements.main.appendChild(container);
   },
+  //Создаем пустые Item на базе fieldCurr
   _createFieldItem() {
     const fragment = document.createDocumentFragment();
     let fieldCurr = this.properties.fieldCurr.flat();
     fieldCurr.forEach((elem) => {
       let fieldItem = document.createElement("div");
       fieldItem.classList.add("field__item");
-      if (!elem) fieldItem.classList.add("empty")
-      fieldItem.innerHTML = elem;
+      if (!elem) fieldItem.classList.add("empty");
       fragment.appendChild(fieldItem);
     });
     return fragment;
+  },
+  //Заполняем массив на базе field, в случае рестарта
+  fillFieldItem() {
+    console.log("start fillFieldItem");
+    let fieldItems = this.elements.field.querySelectorAll(".field__item");
+    let fieldCurr = this.properties.fieldCurr.flat();
+    fieldItems.forEach((item, index) => {
+      item.innerHTML = fieldCurr[index];
+    });
   },
   _createFooter() {
     //!create Footer
