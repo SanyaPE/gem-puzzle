@@ -1,4 +1,4 @@
-import { elements } from "./elements.js";
+// import { elements } from "./elements.js";
 const gamePuzzle = {
   elements: {
     header: null,
@@ -14,9 +14,10 @@ const gamePuzzle = {
     fieldTarget: [],
     fieldCurr: [],
     fieldSize: 4,
+    itemSize: null,
     null: null,
     available: [],
-    timer: null,
+    timer: "00:00",
     moves: 0,
   },
 
@@ -27,21 +28,30 @@ const gamePuzzle = {
     this.createFieldTarget();
     this.createFieldCurrent();
     this.createElements();
+    this.setProperties();
     this.fillFieldItem();
   },
-  choiceSize() {
-    console.log("choiceSize");
-    this.properties.fieldSize = this.elements.controlsSize.value;
-    this.elements.field.innerHTML = "";
-    console.log("size", this.properties.fieldSize);
-    console.log("target arr", this.properties.fieldTarget);
-    console.log("current arr", this.properties.fieldCurr);
-    this.createFieldTarget();
-    console.log("target arr new", this.properties.fieldTarget);
-    //!РАБОТАЕТ НЕПРАВИЛЬНО
-    console.log("current arr new", this.properties.fieldCurr);
-    // this.createFieldCurrent();
-    // this.elements.field.appendChild(this._createFieldItem());
+  setProperties() {
+    let fieldSize = this.properties.fieldSize;
+    let controlsSize = this.elements.controlsSize.value;
+    if (event) {
+      this.properties.fieldSize = controlsSize;
+      this.elements.field.innerHTML = "";
+      this.properties.fieldTarget = null;
+      this.properties.fieldCurr = null;
+      this.properties.moves = 0;
+      this.properties.timer = "00:00";
+      this.createFieldTarget();
+      this.createFieldCurrent();
+      this.elements.field.appendChild(this._createFieldItem());
+      this.fillFieldItem();
+    }
+    let items = this.elements.field.querySelectorAll(".field__item");
+    this.properties.itemSize = `${100 / this.properties.fieldSize - 1}%`
+    items.forEach((elem) => {
+      elem.style.width = this.properties.itemSize;
+      elem.style.height = this.properties.itemSize;
+    });
   },
 
   //Создаем базовый массив согласно fieldSize
@@ -58,23 +68,24 @@ const gamePuzzle = {
   // Перемешиваем базовый массив (_shuffleArray)
   // создаем рабочий 2мерный массив,
   // проверка решаемости _isSolved, false - запуск заново
-  // true - Null add to properties (_setNulltoProp)
-  //! РАБОТАЕТ НЕПРАВИЛЬНо
+  // true - Null add to properties (_setNullToProp)
   createFieldCurrent() {
-    let array = [...this.properties.fieldTarget];
+    let fieldTarget = [...this.properties.fieldTarget];
+    let fieldSize = +this.properties.fieldSize;
+    fieldTarget = this._shuffleArray(fieldTarget);
     let fieldCurr = [];
-    // console.log(array);
-    array = this._shuffleArray(array);
-    // console.log(array);
-    for (let i = 0; i < array.length; ) {
-      // console.log(i);
-      fieldCurr.push(array.slice(i, i + this.properties.fieldSize));
-      i += 4;
+    for (let i = 0; i < fieldSize; i++) {
+      fieldCurr.push(
+        fieldTarget.slice(i * fieldSize, i * fieldSize + fieldSize)
+      );
     }
     let isSolved = this._isSolved(fieldCurr);
     if (isSolved) this.properties.fieldCurr = fieldCurr;
-    else this.createFieldCurrent();
-    this._setNulltoProp();
+    else {
+      this.properties.fieldCurr = null;
+      this.createFieldCurrent();
+    }
+    this._setNullToProp();
   },
 
   //Перемешиваем базовый массив
@@ -92,6 +103,10 @@ const gamePuzzle = {
     if (storageGame.length > 10) storageGame.pop();
     localStorage.setItem("previousGame", JSON.stringify(storageGame));
     return storageGame;
+  },
+  popUp(){
+    let popup = document.querySelector(".popup")
+    popup.classList.toggle('open')
   },
 
   // проверка fieldCurr с готовым решением fieldTarget
@@ -123,7 +138,7 @@ const gamePuzzle = {
   },
 
   //Настройки Null в properties
-  _setNulltoProp() {
+  _setNullToProp() {
     this.properties.null = this._searchElement(null);
     // координаты доступных для перестановки элементов
     let propNull = this.properties.null;
@@ -138,11 +153,53 @@ const gamePuzzle = {
   },
 
   toMove() {
-    if (event.target.closest(".field__item")) {
-      console.log(event.target);
-      let elemClick = gamePuzzle._searchElement(event.target.innerHTML);
-      console.log("elemClick =>", elemClick);
-    }
+    console.log("toMove");
+    let n = 105;
+    let elemClick = event.target;
+    let elemClickPos = this._searchElement(elemClick.innerHTML);
+    let elemNull = this.elements.field.querySelector(".empty");
+    let elemNullPos = this.properties.null;
+    let toLeft = (element) => (element.style.transform = `translateX(-${n}%)`);
+    let toRight = (element) => (element.style.transform = `translateX(${n}%)`);
+    let toUp = (element) => (element.style.transform = `translateY(-${n}%)`);
+    let toDown = (element) => (element.style.transform = `translateY(${n}%)`);
+    this.properties.available.forEach((pos) => {
+      if (pos) pos = pos.join("");
+      if (pos == elemClickPos.join("")) {
+        this.moveCount();
+        if (elemClickPos[0] == elemNullPos[0]) {
+          if (elemClickPos[1] < elemNullPos[1]) {
+            toRight(elemClick);
+            toLeft(elemNull);
+          }
+          if (elemClickPos[1] > elemNullPos[1]) {
+            toLeft(elemClick);
+            toRight(elemNull);
+          }
+        } else if (elemClickPos[0] < elemNullPos[0]) {
+          toDown(elemClick);
+          toUp(elemNull);
+        } else if (elemClickPos[0] > elemNullPos[0]) {
+          toUp(elemClick);
+          toDown(elemNull);
+        }
+        let arr = this.properties.fieldCurr;
+        let temp = arr[elemNullPos[0]][elemNullPos[1]];
+        arr[elemNullPos[0]][elemNullPos[1]] =
+          arr[elemClickPos[0]][elemClickPos[1]];
+        arr[elemClickPos[0]][elemClickPos[1]] = temp;
+        this._setNullToProp();
+        this.elements.field.innerHTML = "";
+        this.elements.field.appendChild(this._createFieldItem());
+        this.fillFieldItem();
+        let items = this.elements.field.querySelectorAll(".field__item");
+        items.forEach((elem) => {
+          elem.style.width = this.properties.itemSize;
+          elem.style.height = this.properties.itemSize;
+        });
+      }
+    });
+    if (this.isMatchTarget()) this.popUp();
   },
 
   _searchElement(element) {
@@ -170,6 +227,10 @@ const gamePuzzle = {
       scoreTime.innerHTML = `${minutes}:${seconds}`;
     };
   },
+  moveCount() {
+    this.properties.moves += 1;
+    this.elements.moves.innerHTML = this.properties.moves;
+  },
 
   createElements() {
     let fragment = document.createDocumentFragment();
@@ -180,6 +241,15 @@ const gamePuzzle = {
     fragment.appendChild(this.elements.main);
     fragment.appendChild(this.elements.footer);
     document.body.appendChild(fragment);
+
+    let popUp = document.createElement("div")
+    let text = document.createElement("p")
+    popUp.classList.add("popup")
+    text.innerHTML = "WINNER"
+    popUp.appendChild(text)
+    popUp.addEventListener("click", this.popUp)
+    document.body.appendChild(popUp)
+
   },
   _createHeader() {
     //!create header
@@ -205,7 +275,7 @@ const gamePuzzle = {
     this.elements.controlsSize.classList.add("controls__size");
     this.elements.controlsSize.addEventListener(
       "change",
-      this.choiceSize.bind(this)
+      this.setProperties.bind(this)
     );
 
     //box
@@ -229,6 +299,9 @@ const gamePuzzle = {
       let btn = document.createElement("button");
       btn.classList.add(elem[0]);
       btn.innerHTML = `${elem[1]}`;
+      if (elem[0] == "controls__new")
+        btn.addEventListener("click", this.setProperties.bind(this));
+
       buttonsBox.appendChild(btn);
     });
     //!score
@@ -241,18 +314,18 @@ const gamePuzzle = {
     timeInner.innerHTML = "Time:";
     this.elements.time = document.createElement("span");
     this.elements.time.setAttribute("id", "time");
-    this.elements.time.innerHTML = "00:00";
+    this.elements.time.innerHTML = this.properties.timer;
     scoreTime.appendChild(timeInner);
     scoreTime.appendChild(this.elements.time);
     score.appendChild(scoreTime);
-    //moves
+    //!moves
     let scoreMoves = document.createElement("div");
     scoreMoves.classList.add("score__moves");
     let movesInner = document.createElement("span");
-    movesInner.innerHTML = "Time:";
+    movesInner.innerHTML = "Moves:";
     this.elements.moves = document.createElement("span");
     this.elements.moves.setAttribute("id", "moves");
-    this.elements.moves.innerHTML = "100";
+    this.elements.moves.innerHTML = this.properties.moves;
     scoreMoves.appendChild(movesInner);
     scoreMoves.appendChild(this.elements.moves);
     score.appendChild(scoreMoves);
@@ -268,27 +341,31 @@ const gamePuzzle = {
     controls.appendChild(buttonsBox);
     container.appendChild(controls);
     container.appendChild(score);
+
     container.appendChild(this.elements.field);
-    this.elements.main.appendChild(container);
+      this.elements.main.appendChild(container);
   },
-  //Создаем пустые Item на базе fieldCurr
-  _createFieldItem() {
+  _createFieldItem() //Создаем пустые Item на базе fieldCurr
+  {
     const fragment = document.createDocumentFragment();
     let fieldCurr = this.properties.fieldCurr.flat();
     fieldCurr.forEach((elem) => {
       let fieldItem = document.createElement("div");
       fieldItem.classList.add("field__item");
-      if (!elem) fieldItem.classList.add("empty");
+      if (elem) fieldItem.addEventListener("click", this.toMove.bind(this));
+      if (!elem) {
+        fieldItem.classList.add("empty");
+      }
       fragment.appendChild(fieldItem);
     });
     return fragment;
   },
   //Заполняем массив на базе field, в случае рестарта
   fillFieldItem() {
-    console.log("start fillFieldItem");
     let fieldItems = this.elements.field.querySelectorAll(".field__item");
     let fieldCurr = this.properties.fieldCurr.flat();
     fieldItems.forEach((item, index) => {
+      item.innerHTML = "";
       item.innerHTML = fieldCurr[index];
     });
   },
@@ -298,20 +375,10 @@ const gamePuzzle = {
     let container = document.createElement("div");
     container.classList.add("container");
     let author = document.createElement("h2");
-    author.innerHTML = "Pepler";
+    author.innerHTML = "2022";
     container.appendChild(author);
     this.elements.footer.appendChild(container);
   },
 };
 
 gamePuzzle.init();
-// console.log(gamePuzzle.properties.fieldTarget);
-// console.log(gamePuzzle.properties.fieldCurr);
-// console.log(gamePuzzle.properties.null);
-// console.log(gamePuzzle.properties.available);
-// console.log(gamePuzzle.properties.available[0]);
-// let a = tik.style.transform = 'translateY(105%)'
-
-//element.style.transform: 'translateY(-n%)'
-// const field = document.querySelector(".field");
-// field.addEventListener("click", gamePuzzle.toMove);

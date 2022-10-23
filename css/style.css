@@ -84,6 +84,7 @@ body {
   justify-content: space-between;
   flex-direction: column;
   height: 100vh;
+  position: relative;
 }
 
 header {
@@ -140,6 +141,11 @@ main {
   font-size: 3rem;
   padding-bottom: 4rem;
 }
+.score__time span:nth-child(2) {
+  display: inline-block;
+  width: 10rem;
+  text-align: end;
+}
 .score__moves span:nth-child(2) {
   display: inline-block;
   width: 6rem;
@@ -178,8 +184,6 @@ select {
   gap: 1%;
 }
 .field__item {
-  width: 24%;
-  height: 24%;
   border-radius: 5%;
   background-color: grey;
   display: flex;
@@ -192,6 +196,31 @@ select {
 
 .empty {
   opacity: 0;
+}
+
+.popup {
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: rgba(205, 214, 219, 0.5);
+  z-index: 2;
+  transition: 0.5s;
+}
+
+.open {
+  display: flex;
+}
+
+.popup > p {
+  font-size: 10rem;
+  color: brown;
+  background-color: #cdd6db;
+  padding: 5%;
+  border-radius: 5%;
 }
 
 /*# sourceMappingURL=style.css.map */

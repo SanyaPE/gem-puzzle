@@ -33,6 +33,11 @@
     // .score__time
 
     &__time {
+        & span:nth-child(2){
+            display: inline-block;
+            width: rem(100);
+            text-align: end;
+        }
     }
 
     // .score__moves
