@@ -24,7 +24,6 @@ const gamePuzzle = {
   //Запуск кода
   //создаем рабочий 2мерный массив _createFieldTarget и настройки Null
   init() {
-    console.log("start init");
     this.createFieldTarget();
     this.createFieldCurrent();
     this.createElements();
@@ -32,6 +31,8 @@ const gamePuzzle = {
     this.fillFieldItem();
   },
   setProperties() {
+    this.properties.moves = 0
+    this.elements.moves.innerHTML = 0
     let fieldSize = this.properties.fieldSize;
     let controlsSize = this.elements.controlsSize.value;
     if (event) {
@@ -80,7 +81,7 @@ const gamePuzzle = {
       );
     }
     let isSolved = this._isSolved(fieldCurr);
-    if (isSolved) this.properties.fieldCurr = fieldCurr;
+    if (!isSolved) this.properties.fieldCurr = fieldCurr;
     else {
       this.properties.fieldCurr = null;
       this.createFieldCurrent();
@@ -106,7 +107,10 @@ const gamePuzzle = {
   },
   popUp(){
     let popup = document.querySelector(".popup")
+    let text = popup.querySelector(".text")
+    text.innerHTML = `Hooray! You solved the puzzle in ${this.properties.timer} and ${this.properties.moves} moves!`
     popup.classList.toggle('open')
+
   },
 
   // проверка fieldCurr с готовым решением fieldTarget
@@ -119,13 +123,10 @@ const gamePuzzle = {
   //Проверка на решаемость раздачи
   _isSolved(FieldCurrent) {
     let temp = FieldCurrent;
-    // console.log(temp);
     let count = 0;
     for (let i = 0; i < temp.length; i++) {
       for (let j = 0; j < temp[i].length - 1; j++) {
-        // console.log(temp[i][j]);
         if (temp[i][j]) {
-          //   console.log(temp[i][j], temp[i].slice(j + 1));
           temp[i]
             .slice(j + 1)
             .forEach((elem) => (elem < temp[i][j] && elem ? count++ : null));
@@ -133,8 +134,7 @@ const gamePuzzle = {
         if (!temp[i][j]) count += j + 1;
       }
     }
-    // console.log(count);
-    return count % 2 ? false : true;
+    return count % 2;
   },
 
   //Настройки Null в properties
@@ -153,7 +153,6 @@ const gamePuzzle = {
   },
 
   toMove() {
-    console.log("toMove");
     let n = 105;
     let elemClick = event.target;
     let elemClickPos = this._searchElement(elemClick.innerHTML);
@@ -245,7 +244,8 @@ const gamePuzzle = {
     let popUp = document.createElement("div")
     let text = document.createElement("p")
     popUp.classList.add("popup")
-    text.innerHTML = "WINNER"
+    text.classList.add("text")
+    text.innerHTML = ''
     popUp.appendChild(text)
     popUp.addEventListener("click", this.popUp)
     document.body.appendChild(popUp)
@@ -345,7 +345,7 @@ const gamePuzzle = {
     container.appendChild(this.elements.field);
       this.elements.main.appendChild(container);
   },
-  _createFieldItem() //Создаем пустые Item на базе fieldCurr
+  _createFieldItem()
   {
     const fragment = document.createDocumentFragment();
     let fieldCurr = this.properties.fieldCurr.flat();

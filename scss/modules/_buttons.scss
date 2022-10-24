@@ -5,6 +5,10 @@
     justify-content:space-between;
     gap: rem(20);
     padding-bottom: rem(30);
+    @include respond-to("tablet"){
+        flex-wrap: wrap;
+        padding-bottom: rem(10);
+    }
 
 
     // .controls__new
@@ -29,6 +33,12 @@
     gap: rem(20);
     font-size: rem(30);
     padding-bottom: rem(40);
+    @include respond-to("tablet"){
+        font-size: rem(15);
+        gap: rem(15);
+        justify-content:space-between;
+        padding-bottom: rem(10);
+    }
 
     // .score__time
 
@@ -37,6 +47,9 @@
             display: inline-block;
             width: rem(100);
             text-align: end;
+            @include respond-to("tablet"){
+                width: 20px;
+            }
         }
     }
 
@@ -47,6 +60,9 @@
             display: inline-block;
             width: rem(60);
             text-align: end;
+            @include respond-to("tablet"){
+                width: 20px;
+            }
         }
     }
 }
@@ -60,12 +76,24 @@ button{
     cursor: pointer;
     font-size: rem(16);
     background-color: #bdae82;
+    @include respond-to("tablet"){
+        width: 40%;
+        height: rem(40);
+        font-size: rem(12);
+    }
 }
 select{
     width: rem(200);
+    height: rem(60);
     font-size: rem(16);
     color: white;
     border-radius: 10px;
     border: solid white 3px;
     background-color: #bdae82;
+    text-align: center;
+    @include respond-to("tablet"){
+        width: 40%;
+        height: rem(40);
+        font-size: rem(12);
+    }
 }

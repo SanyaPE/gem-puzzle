@@ -13,10 +13,6 @@
   // flex-direction: column;
 
   &__item {
-    // width: ((70vmin)/4);
-    // height: (70vmin/4);
-    // width: 24%;
-    // height: 24%;
     border-radius: 5%;
     background-color: grey;
     display: flex;
@@ -25,6 +21,9 @@
     cursor: pointer;
     font-size: 5rem;
     transition: 0.3s;
+    @include respond-to("tablet"){
+      font-size: 2rem;
+    }
   }
 }
 .empty {

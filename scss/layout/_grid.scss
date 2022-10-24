@@ -13,6 +13,10 @@ body {
 }
 header {
   border-bottom: 6px solid #bdae82;
+  font-size: 20px;
+  @include respond-to("tablet"){
+    font-size: 15px;
+  }
 }
 main {
   flex: 1 0 auto;
@@ -33,12 +37,7 @@ footer {
     padding-left: rem(30);
     padding-right: rem(30);
   }
-  @include respond-to("laptop") {
-    padding-left: rem(20);
-    padding-right: rem(20);
-    position: relative;
-  }
-  @include respond-to("mobile-l") {
+  @include respond-to("tablet") {
     padding-left: rem(10);
     padding-right: rem(10);
   }
